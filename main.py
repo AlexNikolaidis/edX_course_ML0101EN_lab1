@@ -12,17 +12,10 @@ df = pd.read_csv(local_file)
 
 cdf = df[['ENGINESIZE','CYLINDERS','FUELCONSUMPTION_COMB','CO2EMISSIONS']]
 viz = cdf[['CYLINDERS','ENGINESIZE','CO2EMISSIONS','FUELCONSUMPTION_COMB']]
-viz.hist()
-plt.show()
 
 msk = np.random.rand(len(df)) < 0.8
 train = cdf[msk]
 test = cdf[~msk]
-
-plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS,  color='blue')
-plt.xlabel("Engine size")
-plt.ylabel("Emission")
-plt.show()
 
 regr = linear_model.LinearRegression()
 train_x = np.asanyarray(train[['ENGINESIZE']])
@@ -31,12 +24,6 @@ regr.fit (train_x, train_y)
 # The coefficients
 print ('Coefficients: ', regr.coef_)
 print ('Intercept: ',regr.intercept_)
-
-plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS,  color='blue')
-plt.plot(train_x, regr.coef_[0][0]*train_x + regr.intercept_[0], '-r')
-plt.xlabel("Engine size")
-plt.ylabel("Emission")
-plt.show()
 
 test_x = np.asanyarray(test[['ENGINESIZE']])
 test_y = np.asanyarray(test[['CO2EMISSIONS']])
